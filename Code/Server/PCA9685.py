@@ -2,73 +2,93 @@
 
 import time
 import math
-import smbus
+import RPi.GPIO as GPIO
 
-# ============================================================================
-# Raspi PCA9685 16-Channel PWM Servo Driver
-# ============================================================================
+#Definition of  motor pins 
+
+#Left Motor
+IN1 = 20
+IN2 = 21
+ENA = 16
+
+#Right Motor
+IN3 = 19
+IN4 = 26
+ENB = 13
+
+#Definition of servo pin
+ServoPin0 = 23
+ServoPin1 = 11
 
 class PCA9685:
 
-  # Registers/etc.
-  __SUBADR1            = 0x02
-  __SUBADR2            = 0x03
-  __SUBADR3            = 0x04
-  __MODE1              = 0x00
-  __PRESCALE           = 0xFE
-  __LED0_ON_L          = 0x06
-  __LED0_ON_H          = 0x07
-  __LED0_OFF_L         = 0x08
-  __LED0_OFF_H         = 0x09
-  __ALLLED_ON_L        = 0xFA
-  __ALLLED_ON_H        = 0xFB
-  __ALLLED_OFF_L       = 0xFC
-  __ALLLED_OFF_H       = 0xFD
+  #Set the GPIO port to BCM encoding mode
+  GPIO.setmode(GPIO.BCM)
 
-  def __init__(self, address=0x40, debug=False):
-    self.bus = smbus.SMBus(1)
-    self.address = address
-    self.debug = debug
-    self.write(self.__MODE1, 0x00)
-    
-  def write(self, reg, value):
-    "Writes an 8-bit value to the specified register/address"
-    self.bus.write_byte_data(self.address, reg, value)
-      
-  def read(self, reg):
-    "Read an unsigned byte from the I2C device"
-    result = self.bus.read_byte_data(self.address, reg)
-    return result
-    
-  def setPWMFreq(self, freq):
-    "Sets the PWM frequency"
-    prescaleval = 25000000.0    # 25MHz
-    prescaleval /= 4096.0       # 12-bit
-    prescaleval /= float(freq)
-    prescaleval -= 1.0
-    prescale = math.floor(prescaleval + 0.5)
+  #Ignore warning information
+  GPIO.setwarnings(False)
 
 
-    oldmode = self.read(self.__MODE1);
-    newmode = (oldmode & 0x7F) | 0x10        # sleep
-    self.write(self.__MODE1, newmode)        # go to sleep
-    self.write(self.__PRESCALE, int(math.floor(prescale)))
-    self.write(self.__MODE1, oldmode)
-    time.sleep(0.005)
-    self.write(self.__MODE1, oldmode | 0x80)
+  def __init__(self):
+    global pwm_ENA
+    global pwm_ENB
+    global pwm_servo0
+    global pwm_servo1
+    GPIO.setup(ENA,GPIO.OUT,initial=GPIO.HIGH)
+    GPIO.setup(IN1,GPIO.OUT,initial=GPIO.LOW)
+    GPIO.setup(IN2,GPIO.OUT,initial=GPIO.LOW)
+    GPIO.setup(ENB,GPIO.OUT,initial=GPIO.HIGH)
+    GPIO.setup(IN3,GPIO.OUT,initial=GPIO.LOW)
+    GPIO.setup(IN4,GPIO.OUT,initial=GPIO.LOW)
+    GPIO.setup(ServoPin0, GPIO.OUT)
+    GPIO.setup(ServoPin1, GPIO.OUT)
+    #Set the PWM pin and frequency is 2000hz
+    pwm_ENA = GPIO.PWM(ENA, 2000)
+    pwm_ENB = GPIO.PWM(ENB, 2000)
 
-  def setPWM(self, channel, on, off):
-    "Sets a single PWM channel"
-    self.write(self.__LED0_ON_L+4*channel, on & 0xFF)
-    self.write(self.__LED0_ON_H+4*channel, on >> 8)
-    self.write(self.__LED0_OFF_L+4*channel, off & 0xFF)
-    self.write(self.__LED0_OFF_H+4*channel, off >> 8)
-  def setMotorPwm(self,channel,duty):
-    self.setPWM(channel,0,duty)
-  def setServoPulse(self, channel, pulse):
-    "Sets the Servo Pulse,The PWM frequency must be 50HZ"
-    pulse = pulse*4096/20000        #PWM frequency is 50HZ,the period is 20000us
-    self.setPWM(channel, 0, int(pulse))
+    #Set the servo frequency to 50 Hz
+    pwm_servo0 = GPIO.PWM(ServoPin0, 50)
+    pwm_servo1 = GPIO.PWM(ServoPin1, 50)
+    pwm_servo0.start(0)
+    pwm_servo1.start(0)
+    pwm_ENA.start(0)
+    pwm_ENB.start(0)
+
+  def setMotorPwm(self, left, right):
+    if(left > 0):
+      GPIO.output(IN1, GPIO.HIGH)
+      GPIO.output(IN2, GPIO.LOW)
+      pwm_ENA.ChangeDutyCycle(left/41)
+    elif(left < 0):
+      GPIO.output(IN1, GPIO.LOW)
+      GPIO.output(IN2, GPIO.HIGH)
+      pwm_ENA.ChangeDutyCycle(-1*left/41)
+    else:
+      GPIO.output(IN1, GPIO.LOW)
+      GPIO.output(IN2, GPIO.LOW)
+
+    if(right > 0):
+      GPIO.output(IN3, GPIO.HIGH)
+      GPIO.output(IN4, GPIO.LOW)
+      pwm_ENB.ChangeDutyCycle(right/41)
+    elif(right < 0):
+      GPIO.output(IN3, GPIO.LOW)
+      GPIO.output(IN4, GPIO.HIGH)
+      pwm_ENB.ChangeDutyCycle(-1*right/41)
+    else:
+      GPIO.output(IN3, GPIO.LOW)
+      GPIO.output(IN4, GPIO.LOW)
+
+  
+  def setServoPulse(self,channel, pulse):
+    if(channel == 8):
+      pwm_servo0.ChangeDutyCycle(pulse)
+      time.sleep(0.1)
+      pwm_servo0.ChangeDutyCycle(0)
+    elif (channel == 9):
+      pwm_servo1.ChangeDutyCycle(pulse)
+      time.sleep(0.1)
+      pwm_servo0.ChangeDutyCycle(0)
 
 if __name__=='__main__':
     pass
