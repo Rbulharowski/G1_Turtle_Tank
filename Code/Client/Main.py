@@ -41,8 +41,8 @@ class mywindow(QMainWindow,Ui_Client):
         self.Key_D=False
         self.Key_Space=False
         self.setFocusPolicy(Qt.StrongFocus)
-        self.progress_Power.setMinimum(0)
-        self.progress_Power.setMaximum(100)
+        #self.progress_Power.setMinimum(0)
+        #self.progress_Power.setMaximum(100)
         self.name.setAlignment(QtCore.Qt.AlignCenter)
         self.label_Servo1.setText('90')
         self.label_Servo2.setText('90')
@@ -76,10 +76,8 @@ class mywindow(QMainWindow,Ui_Client):
         self.VSlider_Servo2.setSingleStep(1)
         self.VSlider_Servo2.setValue(self.servo2)
         self.VSlider_Servo2.valueChanged.connect(self.Change_Up_Down)
-        
-        self.checkBox_Led1.setChecked(False)
-        self.checkBox_Led1.stateChanged.connect(lambda:self.LedChange(self.checkBox_Led1))
-        self.checkBox_Led2.setChecked(False)
+
+        """self.checkBox_Led2.setChecked(False)
         self.checkBox_Led2.stateChanged.connect(lambda:self.LedChange(self.checkBox_Led2))
         self.checkBox_Led3.setChecked(False)
         self.checkBox_Led3.stateChanged.connect(lambda:self.LedChange(self.checkBox_Led3))
@@ -101,11 +99,11 @@ class mywindow(QMainWindow,Ui_Client):
         self.checkBox_Led_Mode3.setChecked(False)
         self.checkBox_Led_Mode3.stateChanged.connect(lambda:self.LedChange(self.checkBox_Led_Mode3))
         self.checkBox_Led_Mode4.setChecked(False)
-        self.checkBox_Led_Mode4.stateChanged.connect(lambda:self.LedChange(self.checkBox_Led_Mode4)) 
+        self.checkBox_Led_Mode4.stateChanged.connect(lambda:self.LedChange(self.checkBox_Led_Mode4))"""
 
         self.Btn_Mode1.setChecked(True)
         self.Btn_Mode1.toggled.connect(lambda:self.on_btn_Mode(self.Btn_Mode1))
-        self.Btn_Mode2.setChecked(False)
+        """self.Btn_Mode2.setChecked(False)
         self.Btn_Mode2.toggled.connect(lambda:self.on_btn_Mode(self.Btn_Mode2))
         self.Btn_Mode3.setChecked(False)
         self.Btn_Mode3.toggled.connect(lambda:self.on_btn_Mode(self.Btn_Mode3))
@@ -113,7 +111,7 @@ class mywindow(QMainWindow,Ui_Client):
         self.Btn_Mode4.toggled.connect(lambda:self.on_btn_Mode(self.Btn_Mode4))
         
         self.Ultrasonic.clicked.connect(self.on_btn_Ultrasonic)
-        self.Light.clicked.connect(self.on_btn_Light)
+        self.Light.clicked.connect(self.on_btn_Light)"""
         
         self.Btn_ForWard.pressed.connect(self.on_btn_ForWard)
         self.Btn_ForWard.released.connect(self.on_btn_Stop)
@@ -134,19 +132,22 @@ class mywindow(QMainWindow,Ui_Client):
         self.Btn_Down.clicked.connect(self.on_btn_Down)
         self.Btn_Home.clicked.connect(self.on_btn_Home)
         self.Btn_Right.clicked.connect(self.on_btn_Right)
-        self.Btn_Tracking_Faces.clicked.connect(self.Tracking_Face)
+        #self.Btn_Tracking_Faces.clicked.connect(self.Tracking_Face)
         
 
-        self.Btn_Buzzer.pressed.connect(self.on_btn_Buzzer)
-        self.Btn_Buzzer.released.connect(self.on_btn_Buzzer)
+        #self.Btn_Buzzer.pressed.connect(self.on_btn_Buzzer)
+        #self.Btn_Buzzer.released.connect(self.on_btn_Buzzer)
         
         self.Btn_Connect.clicked.connect(self.on_btn_Connect)
+
+        self.checkBox_Led1.clicked.connect(self.on_LED)
         
         
         self.Window_Min.clicked.connect(self.windowMinimumed)
         self.Window_Close.clicked.connect(self.close)
         self.timer = QTimer(self)
         self.timer.timeout.connect(self.time)
+
     def mousePressEvent(self, event):
         if event.button()==Qt.LeftButton:
             self.m_drag=True
@@ -215,7 +216,7 @@ class mywindow(QMainWindow,Ui_Client):
                 self.checkBox_Led1.setChecked(False)
             else:
                 self.checkBox_Led1.setChecked(True)
-        elif(event.key() == Qt.Key_2):
+        """elif(event.key() == Qt.Key_2):
             if self.checkBox_Led2.isChecked() == True:
                 self.checkBox_Led2.setChecked(False)
             else:
@@ -249,7 +250,7 @@ class mywindow(QMainWindow,Ui_Client):
             if self.checkBox_Led8.isChecked() == True:
                 self.checkBox_Led8.setChecked(False)
             else:
-                self.checkBox_Led8.setChecked(True)
+                self.checkBox_Led8.setChecked(True)"""
 
                 
         if event.isAutoRepeat():
@@ -359,19 +360,19 @@ class mywindow(QMainWindow,Ui_Client):
         else:
             self.TCP.sendData(cmd.CMD_BUZZER+self.intervalChar+'0'+self.endChar)
             self.Btn_Buzzer.setText('Buzzer')
-    def on_btn_Ultrasonic(self):
+    """def on_btn_Ultrasonic(self):
         if self.Ultrasonic.text()=="Ultrasonic":
             self.TCP.sendData(cmd.CMD_SONIC+self.intervalChar+'1'+self.endChar)
         else:
             self.TCP.sendData(cmd.CMD_SONIC+self.intervalChar+'0'+self.endChar)
-            self.Ultrasonic.setText("Ultrasonic")
+            self.Ultrasonic.setText("Ultrasonic")"""
  
-    def on_btn_Light(self):
+    """def on_btn_Light(self):
         if self.Light.text() == "Light":
             self.TCP.sendData(cmd.CMD_LIGHT+self.intervalChar+'1'+self.endChar)
         else:
             self.TCP.sendData(cmd.CMD_LIGHT+self.intervalChar+'0'+self.endChar)
-            self.Light.setText("Light")
+            self.Light.setText("Light")"""
 
         
     def Change_Left_Right(self):#Left or Right
@@ -490,7 +491,7 @@ class mywindow(QMainWindow,Ui_Client):
             if Mode.isChecked() == True:
                 #self.timer.start(34)
                 self.TCP.sendData(cmd.CMD_MODE+self.intervalChar+'one'+self.endChar)
-        if Mode.text() == "M-Light":
+        """if Mode.text() == "M-Light":
             if Mode.isChecked() == True:
                 #self.timer.stop()
                 self.TCP.sendData(cmd.CMD_MODE+self.intervalChar+'two'+self.endChar)
@@ -501,9 +502,18 @@ class mywindow(QMainWindow,Ui_Client):
         if Mode.text() == "M-Line":
             if Mode.isChecked() == True:
                 #self.timer.stop()
-                self.TCP.sendData(cmd.CMD_MODE+self.intervalChar+'four'+self.endChar)
+                self.TCP.sendData(cmd.CMD_MODE+self.intervalChar+'four'+self.endChar)"""
          
-                                  
+    def on_LED(self):
+        if self.checkBox_Led1.text() == "LED ON":
+            self.checkBox_Led1.setText( "LED OFF")
+            self.TCP.sendData(cmd.CMD_LED+self.intervalChar+'one'+self.endChar)
+        elif self.checkBox_Led1.text()=="LED OFF":
+            self.checkBox_Led1.setText( "LED ON")
+            self.TCP.sendData(cmd.CMD_LED+self.intervalChar+'one'+self.endChar)
+            
+
+
     def on_btn_Connect(self):
         if self.Btn_Connect.text() == "Connect":
             self.h=self.IP.text()
@@ -571,11 +581,11 @@ class mywindow(QMainWindow,Ui_Client):
                         cmdArray=cmdArray[:-1]
                 for oneCmd in cmdArray:
                     Massage=oneCmd.split("#")
-                    if cmd.CMD_SONIC in Massage:
+                    """if cmd.CMD_SONIC in Massage:
                         self.Ultrasonic.setText('Obstruction:%s cm'%Massage[1])
                     elif cmd.CMD_LIGHT in Massage:
-                        self.Light.setText("Left:"+Massage[1]+'V'+' '+"Right:"+Massage[2]+'V')
-                    elif cmd. CMD_POWER in Massage:
+                        self.Light.setText("Left:"+Massage[1]+'V'+' '+"Right:"+Massage[2]+'V')"""
+                    if cmd. CMD_POWER in Massage:
                         percent_power=int((float(Massage[1])-7)/1.40*100)
                         self.progress_Power.setValue(percent_power) 
     def is_valid_jpg(self,jpg_file):
@@ -600,11 +610,12 @@ class mywindow(QMainWindow,Ui_Client):
             pass
         return bValid
 
-    def Tracking_Face(self):
+    """def Tracking_Face(self):
         if self.Btn_Tracking_Faces.text()=="Tracing-On":
             self.Btn_Tracking_Faces.setText("Tracing-Off")
         else:
-            self.Btn_Tracking_Faces.setText("Tracing-On")
+            self.Btn_Tracking_Faces.setText("Tracing-On")"""
+    
     def find_Face(self,face_x,face_y):
         if face_x!=0 and face_y!=0:
             offset_x=float(face_x/400-0.5)*2
@@ -623,10 +634,10 @@ class mywindow(QMainWindow,Ui_Client):
         try:
             if  self.is_valid_jpg('video.jpg'):
                 self.label_Video.setPixmap(QPixmap('video.jpg'))
-                if self.Btn_Tracking_Faces.text()=="Tracing-Off":
-                        self.find_Face(self.TCP.face_x,self.TCP.face_y)
+                #if self.Btn_Tracking_Faces.text()=="Tracing-Off":
+                #        self.find_Face(self.TCP.face_x,self.TCP.face_y)
         except Exception as e:
-            print(e)
+            print("Here I am")
         self.TCP.video_Flag=True
         
             

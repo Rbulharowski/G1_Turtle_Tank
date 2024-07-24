@@ -58,23 +58,36 @@ class VideoStreaming:
     def streaming(self,ip):
         stream_bytes = b' '
         try:
-            self.client_socket.connect((ip, 8000))
-            self.connection = self.client_socket.makefile('rb')
+            self.client_socket.connect((ip, 5000))
+            #self.connection = self.client_socket.makefile('rb')
         except:
             #print "command port connect failed"
+            print("Failed Camera")
             pass
         while True:
             try:
-                stream_bytes= self.connection.read(4) 
+                # Receive frame size
+                frame_size = int.from_bytes(self.client_socket.recv(4), byteorder='big')
+                
+                # Receive frame data
+                frame_data = b''
+                while len(frame_data) < frame_size:
+                    frame_data += self.client_socket.recv(frame_size - len(frame_data))
+                    
+                # Decode frame from JPEG
+                frame_np = cv2.imdecode(np.frombuffer(frame_data, dtype=np.uint8), cv2.IMREAD_COLOR)
+                cv2.imwrite('video.jpg',frame_np)
+
+                """stream_bytes= self.connection.read(4) 
                 leng=struct.unpack('<L', stream_bytes[:4])
                 jpg=self.connection.read(leng[0])
                 if self.IsValidImage4Bytes(jpg):
                             image = cv2.imdecode(np.frombuffer(jpg, dtype=np.uint8), cv2.IMREAD_COLOR)
                             if self.video_Flag:
                                 self.face_detect(image)
-                                self.video_Flag=False
+                                self.video_Flag=False"""
             except Exception as e:
-                print (e)
+                print ("Failure")
                 break
                   
     def sendData(self,s):
@@ -91,7 +104,7 @@ class VideoStreaming:
 
     def socket1_connect(self,ip):
         try:
-            self.client_socket1.connect((ip, 5000))
+            self.client_socket1.connect((ip, 8000))
             self.connect_Flag=True
             print ("Connection Successful !")
         except Exception as e:
