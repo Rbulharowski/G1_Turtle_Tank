@@ -39,10 +39,10 @@ class mywindow(QMainWindow,Ui_server_ui):
             self.TCP_Server.StartTcpServer()
             self.ReadData=Thread(target=self.TCP_Server.readdata)
             self.SendVideo=Thread(target=self.TCP_Server.sendvideo)
-            self.power=Thread(target=self.TCP_Server.Power)
+            #self.power=Thread(target=self.TCP_Server.Power)
             self.SendVideo.start()
             self.ReadData.start()
-            self.power.start()
+            #self.power.start()
             if self.user_ui:
                 self.label.setText("Server On")
                 self.Button_Server.setText("Off")

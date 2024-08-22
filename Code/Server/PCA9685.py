@@ -29,30 +29,33 @@ class PCA9685:
   GPIO.setwarnings(False)
 
 
-  def __init__(self):
-    global pwm_ENA
-    global pwm_ENB
-    global pwm_servo0
-    global pwm_servo1
-    GPIO.setup(ENA,GPIO.OUT,initial=GPIO.HIGH)
-    GPIO.setup(IN1,GPIO.OUT,initial=GPIO.LOW)
-    GPIO.setup(IN2,GPIO.OUT,initial=GPIO.LOW)
-    GPIO.setup(ENB,GPIO.OUT,initial=GPIO.HIGH)
-    GPIO.setup(IN3,GPIO.OUT,initial=GPIO.LOW)
-    GPIO.setup(IN4,GPIO.OUT,initial=GPIO.LOW)
-    GPIO.setup(ServoPin0, GPIO.OUT)
-    GPIO.setup(ServoPin1, GPIO.OUT)
-    #Set the PWM pin and frequency is 2000hz
-    pwm_ENA = GPIO.PWM(ENA, 2000)
-    pwm_ENB = GPIO.PWM(ENB, 2000)
+  def __init__(self,input):
+    if input == 0:
+      global pwm_ENA
+      global pwm_ENB
+      GPIO.setup(ENA,GPIO.OUT,initial=GPIO.HIGH)
+      GPIO.setup(IN1,GPIO.OUT,initial=GPIO.LOW)
+      GPIO.setup(IN2,GPIO.OUT,initial=GPIO.LOW)
+      GPIO.setup(ENB,GPIO.OUT,initial=GPIO.HIGH)
+      GPIO.setup(IN3,GPIO.OUT,initial=GPIO.LOW)
+      GPIO.setup(IN4,GPIO.OUT,initial=GPIO.LOW)
 
-    #Set the servo frequency to 50 Hz
-    pwm_servo0 = GPIO.PWM(ServoPin0, 50)
-    pwm_servo1 = GPIO.PWM(ServoPin1, 50)
-    pwm_servo0.start(0)
-    pwm_servo1.start(0)
-    pwm_ENA.start(0)
-    pwm_ENB.start(0)
+      #Set the PWM pin and frequency is 2000hz
+      pwm_ENA = GPIO.PWM(ENA, 2000)
+      pwm_ENB = GPIO.PWM(ENB, 2000)
+      pwm_ENA.start(0)
+      pwm_ENB.start(0)
+    else:
+      global pwm_servo0
+      global pwm_servo1
+      GPIO.setup(ServoPin0, GPIO.OUT)
+      GPIO.setup(ServoPin1, GPIO.OUT)
+
+      #Set the servo frequency to 50 Hz
+      pwm_servo0 = GPIO.PWM(ServoPin0, 50)
+      pwm_servo1 = GPIO.PWM(ServoPin1, 50)
+      pwm_servo0.start(0)
+      pwm_servo1.start(0)
 
   def setMotorPwm(self, left, right):
     if(left > 0):

@@ -8,9 +8,9 @@ GPIO.setup(Buzzer_Pin,GPIO.OUT)
 class Buzzer:
     def run(self,command):
         if command!="0":
-            GPIO.output(Buzzer_Pin,False)
-        else:
             GPIO.output(Buzzer_Pin,True)
+        else:
+            GPIO.output(Buzzer_Pin,False)
 if __name__=='__main__':
     B=Buzzer()
     B.run('1')

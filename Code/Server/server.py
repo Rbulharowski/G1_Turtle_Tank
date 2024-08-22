@@ -4,10 +4,11 @@ import io
 import socket
 import struct
 import time
-from picamera2 import Picamera2,Preview
-from picamera2.encoders import JpegEncoder
-from picamera2.outputs import FileOutput
-from picamera2.encoders import Quality
+import cv2
+#from picamera2 import Picamera2,Preview
+#from picamera2.encoders import JpegEncoder
+#from picamera2.outputs import FileOutput
+#from picamera2.encoders import Quality
 from threading import Condition
 import fcntl
 import  sys
@@ -15,8 +16,8 @@ import threading
 from Motor import *
 from servo import *
 from Led import *
-from Buzzer import *
-from ADC import *
+#from Buzzer import *
+#from ADC import *
 from Thread import *
 from Light import *
 from Ultrasonic import *
@@ -40,32 +41,36 @@ class Server:
         self.PWM=Motor()
         self.servo=Servo()
         self.led=Led()
-        self.ultrasonic=Ultrasonic()
-        self.buzzer=Buzzer()
-        self.adc=Adc()
+        #self.ultrasonic=Ultrasonic()
+        #self.buzzer=Buzzer()
+        #self.adc=Adc()
         self.light=Light()
-        self.infrared=Line_Tracking()
+        #self.infrared=Line_Tracking()
         self.tcp_Flag = True
         self.sonic=False
         self.Light=False
         self.Mode = 'one'
         self.endChar='\n'
         self.intervalChar='#'
+
     def get_interface_ip(self):
-        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        return socket.inet_ntoa(fcntl.ioctl(s.fileno(),
-                                            0x8915,
-                                            struct.pack('256s',b'wlan0'[:15])
-                                            )[20:24])
+        #s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        #return socket.inet_ntoa(fcntl.ioctl(s.fileno(),0x8915,struct.pack('256s',b'wlan0'[:15]))[20:24])
+        client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        return "192.168.1.3"
+
     def StartTcpServer(self):
-        HOST=str(self.get_interface_ip())
+        #HOST=str(self.get_interface_ip())
+        HOST = "192.168.1.3"
+        self.server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.server_socket1 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.server_socket1 = socket.socket()
         self.server_socket1.setsockopt(socket.SOL_SOCKET,socket.SO_REUSEPORT,1)
-        self.server_socket1.bind((HOST, 5000))
+        self.server_socket1.bind((HOST, 8000))
         self.server_socket1.listen(1)
         self.server_socket = socket.socket()
         self.server_socket.setsockopt(socket.SOL_SOCKET,socket.SO_REUSEPORT,1)
-        self.server_socket.bind((HOST, 8000))              
+        self.server_socket.bind((HOST, 5000))              
         self.server_socket.listen(1)
         print('Server address: '+HOST)      
         
@@ -85,16 +90,31 @@ class Server:
         self.ReadData.start()
     def send(self,data):
         self.connection1.send(data.encode('utf-8'))    
+
     def sendvideo(self):
         try:
             self.connection,self.client_address = self.server_socket.accept()
-            self.connection=self.connection.makefile('wb')
+            #self.connection=self.connection.makefile('wb')
         except:
             pass
         self.server_socket.close()
         print ("socket video connected ... ")
-        camera = Picamera2()
-        camera.configure(camera.create_video_configuration(main={"size": (400, 300)}))
+        #camera = Picamera2()
+        camera = cv2.VideoCapture(0)
+        while True:
+            # Read frame from camera
+            ret, frame = camera.read()
+            
+            # Encode frame as JPEG
+            encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), 90]  # Adjust quality as needed
+            _, frame_encoded = cv2.imencode('.jpg', frame, encode_param)
+            
+            # Send frame size
+            self.connection.send(len(frame_encoded).to_bytes(4, byteorder='big'))
+            
+            # Send frame data
+            self.connection.send(frame_encoded)
+        """camera.configure(camera.create_video_configuration(main={"size": (400, 300)}))
         output = StreamingOutput()
         encoder = JpegEncoder(q=90)
         camera.start_recording(encoder, FileOutput(output),quality=Quality.VERY_HIGH) 
@@ -112,21 +132,21 @@ class Server:
                 camera.stop_recording()
                 camera.close()
                 print ("End transmit ... " )
-                break
+                break"""
                  
     def stopMode(self):
         try:
-            stop_thread(self.infraredRun)
+            #stop_thread(self.infraredRun)
             self.PWM.setMotorModel(0,0,0,0)
         except:
             pass
         try:
-            stop_thread(self.lightRun)
+            #stop_thread(self.lightRun)
             self.PWM.setMotorModel(0,0,0,0)
         except:
             pass            
         try:
-            stop_thread(self.ultrasonicRun)
+            #stop_thread(self.ultrasonicRun)
             self.PWM.setMotorModel(0,0,0,0)
             self.servo.setServoPwm('0',90)
             self.servo.setServoPwm('1',90)
@@ -172,7 +192,7 @@ class Server:
                         if data[1]=='one' or data[1]=="1":
                             self.stopMode()
                             self.Mode='one'
-                        elif data[1]=='two' or data[1]=="3":
+                        """elif data[1]=='two' or data[1]=="3":
                             self.stopMode()
                             self.Mode='two'
                             self.lightRun=Thread(target=self.light.run)
@@ -186,7 +206,7 @@ class Server:
                             self.stopMode()
                             self.Mode='four'
                             self.infraredRun=threading.Thread(target=self.infrared.run)
-                            self.infraredRun.start()
+                            self.infraredRun.start()"""
                             
                     elif (cmd.CMD_MOTOR in data) and self.Mode=='one':
                         try:
@@ -211,13 +231,18 @@ class Server:
 
                     elif cmd.CMD_LED in data:
                         try:
-                            data1=int(data[1])
-                            data2=int(data[2])
-                            data3=int(data[3])
-                            data4=int(data[4])
-                            if data1==None or data2==None or data2==None or data3==None:
-                                continue
-                            self.led.ledIndex(data1,data2,data3,data4)
+                            self.led.toggleRed()
+                        except:
+                            pass
+                    elif cmd.CMD_BUZZER in data:
+                        try:
+                            self.buzzer.run(data[1])
+                        except:
+                            pass
+                    """elif cmd.CMD_POWER in data:
+                        ADC_Power=self.adc.recvADC(2)*3
+                        try:
+                            self.send(cmd.CMD_POWER+'#'+str(ADC_Power)+'\n')
                         except:
                             pass
                     elif cmd.CMD_LED_MOD in data:
@@ -245,28 +270,17 @@ class Server:
                             self.ultrasonicTimer.start()
                         else:
                             self.sonic=False
-                    elif cmd.CMD_BUZZER in data:
-                        try:
-                            self.buzzer.run(data[1])
-                        except:
-                            pass
                     elif cmd.CMD_LIGHT in data:
                         if data[1]=='1':
                             self.Light=True
                             self.lightTimer = threading.Timer(0.3,self.sendLight)
                             self.lightTimer.start()
                         else:
-                            self.Light=False
-                    elif cmd.CMD_POWER in data:
-                        ADC_Power=self.adc.recvADC(2)*3
-                        try:
-                            self.send(cmd.CMD_POWER+'#'+str(ADC_Power)+'\n')
-                        except:
-                            pass
+                            self.Light=False"""
         except Exception as e: 
             print(e)
         self.StopTcpServer()    
-    def sendUltrasonic(self):
+    """def sendUltrasonic(self):
         if self.sonic==True:
             ADC_Ultrasonic=self.ultrasonic.get_distance()
             if ADC_Ultrasonic==self.ultrasonic.get_distance():
@@ -303,6 +317,6 @@ class Server:
                     self.buzzer.run('0')
                     time.sleep(0.1)
             else:
-                self.buzzer.run('0')
+                self.buzzer.run('0')"""
 if __name__=='__main__':
     pass

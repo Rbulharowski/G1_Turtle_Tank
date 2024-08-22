@@ -1,4 +1,4 @@
-# -*-coding: utf-8 -*-
+"""# -*-coding: utf-8 -*-
 import time
 from rpi_ws281x import *
 # LED strip configuration:
@@ -17,9 +17,9 @@ class Led:
         #Control the sending order of color data
         self.ORDER = "RGB"  
         # Create NeoPixel object with appropriate configuration.
-        self.strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL)
+        #self.strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL)
         # Intialize the library (must be called once before other functions).
-        self.strip.begin()
+        #self.strip.begin()
     def LED_TYPR(self,order,R_G_B):
         B=R_G_B & 255
         G=R_G_B >> 8 & 255
@@ -29,7 +29,7 @@ class Led:
         if order in Led_type:
             return color[Led_type.index(order)]
     def colorWipe(self,strip, color, wait_ms=50):
-        """Wipe color across display a pixel at a time."""
+        Wipe color across display a pixel at a time.
         color=self.LED_TYPR(self.ORDER,color)
         for i in range(self.strip.numPixels()):
             self.strip.setPixelColor(i, color)
@@ -37,7 +37,7 @@ class Led:
             time.sleep(wait_ms/1000.0)
 
     def theaterChase(self,strip, color, wait_ms=50, iterations=10):
-        """Movie theater light style chaser animation."""
+        Movie theater light style chaser animation.
         color=self.LED_TYPR(self.ORDER,color)
         for j in range(iterations):
             for q in range(3):
@@ -49,7 +49,7 @@ class Led:
                     self.strip.setPixelColor(i+q, 0)
 
     def wheel(self,pos):
-        """Generate rainbow colors across 0-255 positions."""
+        Generate rainbow colors across 0-255 positions.
         if pos<0 or pos >255:
             r=g=b=0
         elif pos < 85:
@@ -69,7 +69,7 @@ class Led:
         return self.LED_TYPR(self.ORDER,Color(r,g,b))
 
     def rainbow(self,strip, wait_ms=20, iterations=1):
-        """Draw rainbow that fades across all pixels at once."""
+        Draw rainbow that fades across all pixels at once.
         for j in range(256*iterations):
             for i in range(self.strip.numPixels()):
                  self.strip.setPixelColor(i, self.wheel((i+j) & 255))
@@ -77,7 +77,7 @@ class Led:
             time.sleep(wait_ms/1000.0)
 
     def rainbowCycle(self,strip, wait_ms=20, iterations=5):
-        """Draw rainbow that uniformly distributes itself across all pixels."""
+        Draw rainbow that uniformly distributes itself across all pixels.
         for j in range(256*iterations):
             for i in range(self.strip.numPixels()):
                 self.strip.setPixelColor(i, self.wheel((int(i * 256 / self.strip.numPixels()) + j) & 255))
@@ -85,7 +85,7 @@ class Led:
             time.sleep(wait_ms/1000.0)
 
     def theaterChaseRainbow(self,strip, wait_ms=50):
-        """Rainbow movie theater light style chaser animation."""
+        Rainbow movie theater light style chaser animation.
         for j in range(256):
             for q in range(3):
                 for i in range(0, self.strip.numPixels(), 3):
@@ -137,7 +137,54 @@ if __name__ == '__main__':
             led.rainbowCycle(led.strip)
             led.colorWipe(led.strip, Color(0,0,0),10)
     except KeyboardInterrupt:  # When 'Ctrl+C' is pressed, the child program destroy() will be  executed.
-        led.colorWipe(led.strip, Color(0,0,0),10)
+        led.colorWipe(led.strip, Color(0,0,0),10)"""
+
+# -*- coding:UTF-8 -*-
+
+import RPi.GPIO as GPIO
+import time
+
+#Definition of RGB module pin
+LED_R = 22
+LED_G = 27
+LED_B = 24
+class Led:
+    #Set the GPIO port to BCM encoding mode
+    GPIO.setmode(GPIO.BCM)
+
+    #Ignore warning information
+    GPIO.setwarnings(False)
+    def __init__(self):
+        global On 
+        On = False
+        #Set the GPIO port to BCM encoding mode.
+        GPIO.setmode(GPIO.BCM)
+
+        #RGB pins are initialized into output mode
+        GPIO.setup(LED_R, GPIO.OUT)
+        GPIO.setup(LED_G, GPIO.OUT)
+        GPIO.setup(LED_B, GPIO.OUT)
+
+    def toggleRed(self):
+        global On
+        if On:
+            On = False
+            GPIO.output(LED_R, GPIO.LOW)
+            GPIO.output(LED_G, GPIO.LOW)
+            GPIO.output(LED_B, GPIO.LOW)
+        else:
+            On = True
+            GPIO.output(LED_R, GPIO.HIGH)
+            GPIO.output(LED_G, GPIO.LOW)
+            GPIO.output(LED_B, GPIO.LOW)
+
+
+#Display 7 color LED
+if __name__=='__main__':
+    led = Led()
+    while True:
+        led.toggleRed()
+        time.sleep(1)
 
         
             
