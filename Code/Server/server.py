@@ -16,7 +16,7 @@ import threading
 from Motor import *
 from servo import *
 from Led import *
-#from Buzzer import *
+from Buzzer import *
 #from ADC import *
 from Thread import *
 from Light import *
@@ -42,7 +42,7 @@ class Server:
         self.servo=Servo()
         self.led=Led()
         #self.ultrasonic=Ultrasonic()
-        #self.buzzer=Buzzer()
+        self.buzzer=Buzzer()
         #self.adc=Adc()
         self.light=Light()
         #self.infrared=Line_Tracking()
@@ -61,6 +61,9 @@ class Server:
 
     def StartTcpServer(self):
         #HOST=str(self.get_interface_ip())
+
+        ### IMPORTANT: Need to update the Host server ip address
+
         HOST = "192.168.1.3"
         self.server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.server_socket1 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -72,7 +75,10 @@ class Server:
         self.server_socket.setsockopt(socket.SOL_SOCKET,socket.SO_REUSEPORT,1)
         self.server_socket.bind((HOST, 5000))              
         self.server_socket.listen(1)
-        print('Server address: '+HOST)      
+        print('Server address: '+HOST) 
+        self.buzzer.run(self,'1')
+        time.sleep(1)
+        self.buzzer.run(self,'0')   
         
     def StopTcpServer(self):
         try:
