@@ -13,8 +13,11 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 class Ui_Client(object):
     def setupUi(self, Client):
+        xSize = 1920
+        ySize = 1080
+
         Client.setObjectName("Client")
-        Client.resize(1920, 1080)
+        Client.resize(xSize, ySize)
         palette = QtGui.QPalette()
         brush = QtGui.QBrush(QtGui.QColor(72, 72, 72))
         brush.setStyle(QtCore.Qt.SolidPattern)
@@ -152,7 +155,7 @@ class Ui_Client(object):
 "")
         #Video Screen
         self.label_Video = QtWidgets.QLabel(Client)
-        self.label_Video.setGeometry(QtCore.QRect(1, 42, 1280, 960))
+        self.label_Video.setGeometry(QtCore.QRect(1, 42, xSize - 400, ySize - 50))
         font = QtGui.QFont()
         font.setFamily("Malgun Gothic")
         font.setPointSize(10)
@@ -162,7 +165,7 @@ class Ui_Client(object):
 
         #Forward Button
         self.Btn_ForWard = QtWidgets.QPushButton(Client)
-        self.Btn_ForWard.setGeometry(QtCore.QRect(1320, 460, 90, 30))
+        self.Btn_ForWard.setGeometry(QtCore.QRect(xSize - 250, 460, 90, 30))
         font = QtGui.QFont()
         font.setFamily("Malgun Gothic")
         font.setPointSize(10)
@@ -172,7 +175,7 @@ class Ui_Client(object):
         
         # Top Bar
         self.name = QtWidgets.QLabel(Client)
-        self.name.setGeometry(QtCore.QRect(0, 1, 1820, 40))
+        self.name.setGeometry(QtCore.QRect(0, 1, xSize - 100, 40))
         font = QtGui.QFont()
         font.setFamily("Malgun Gothic")
         font.setPointSize(28)
@@ -184,7 +187,7 @@ class Ui_Client(object):
 
         #Left Button
         self.Btn_Turn_Left = QtWidgets.QPushButton(Client)
-        self.Btn_Turn_Left.setGeometry(QtCore.QRect(1210, 510, 90, 30))
+        self.Btn_Turn_Left.setGeometry(QtCore.QRect(xSize - 350, 510, 90, 30))
         font = QtGui.QFont()
         font.setFamily("Malgun Gothic")
         font.setPointSize(10)
@@ -194,7 +197,7 @@ class Ui_Client(object):
 
         #Back Button
         self.Btn_BackWard = QtWidgets.QPushButton(Client)
-        self.Btn_BackWard.setGeometry(QtCore.QRect(1320, 560, 90, 30))
+        self.Btn_BackWard.setGeometry(QtCore.QRect(xSize - 250, 560, 90, 30))
         font = QtGui.QFont()
         font.setFamily("Malgun Gothic")
         font.setPointSize(10)
@@ -204,7 +207,7 @@ class Ui_Client(object):
 
         #Right Button
         self.Btn_Turn_Right = QtWidgets.QPushButton(Client)
-        self.Btn_Turn_Right.setGeometry(QtCore.QRect(1430, 510, 90, 30))
+        self.Btn_Turn_Right.setGeometry(QtCore.QRect(xSize - 150, 510, 90, 30))
         font = QtGui.QFont()
         font.setFamily("Malgun Gothic")
         font.setPointSize(10)
@@ -214,7 +217,7 @@ class Ui_Client(object):
 
         #Video Button
         self.Btn_Video = QtWidgets.QPushButton(Client)
-        self.Btn_Video.setGeometry(QtCore.QRect(1430, 380, 90, 30))
+        self.Btn_Video.setGeometry(QtCore.QRect(xSize - 150, 380, 90, 30))
         font = QtGui.QFont()
         font.setFamily("Malgun Gothic")
         font.setPointSize(10)
@@ -222,7 +225,7 @@ class Ui_Client(object):
         self.Btn_Video.setStyleSheet("")
         self.Btn_Video.setObjectName("Btn_Video")
         
-        #Camera Down
+        """#Camera Down
         self.Btn_Down = QtWidgets.QPushButton(Client)
         self.Btn_Down.setGeometry(QtCore.QRect(1710, 490, 75, 30))
         font = QtGui.QFont()
@@ -270,11 +273,11 @@ class Ui_Client(object):
         font.setPointSize(10)
         self.Btn_Right.setFont(font)
         self.Btn_Right.setStyleSheet("")
-        self.Btn_Right.setObjectName("Btn_Right")
+        self.Btn_Right.setObjectName("Btn_Right")"""
 
         #Close Button
         self.Window_Close = QtWidgets.QPushButton(Client)
-        self.Window_Close.setGeometry(QtCore.QRect(1870, 1, 50, 40))
+        self.Window_Close.setGeometry(QtCore.QRect(xSize - 50, 1, 50, 40))
         font = QtGui.QFont()
         font.setFamily("Malgun Gothic")
         self.Window_Close.setFont(font)
@@ -282,7 +285,7 @@ class Ui_Client(object):
 
         #IP Address
         self.IP = QtWidgets.QLineEdit(Client)
-        self.IP.setGeometry(QtCore.QRect(1210, 380, 101, 30))
+        self.IP.setGeometry(QtCore.QRect(xSize - 350, 380, 101, 30))
         font = QtGui.QFont()
         font.setFamily("Malgun Gothic")
         font.setPointSize(10)
@@ -292,14 +295,14 @@ class Ui_Client(object):
 
         #Connect Button
         self.Btn_Connect = QtWidgets.QPushButton(Client)
-        self.Btn_Connect.setGeometry(QtCore.QRect(1320, 380, 90, 30))
+        self.Btn_Connect.setGeometry(QtCore.QRect(xSize - 250, 380, 90, 30))
         font = QtGui.QFont()
         font.setFamily("Malgun Gothic")
         font.setPointSize(10)
         self.Btn_Connect.setFont(font)
         self.Btn_Connect.setObjectName("Btn_Connect")
 
-        #LED Button
+        """#LED Button
         self.checkBox_Led1 = QtWidgets.QPushButton(Client)
         self.checkBox_Led1.setGeometry(QtCore.QRect(1620, 120, 91, 31))
         font = QtGui.QFont()
@@ -398,17 +401,17 @@ class Ui_Client(object):
         font.setFamily("Malgun Gothic")
         font.setPointSize(14)
         self.label_FineServo2.setFont(font)
-        self.label_FineServo2.setObjectName("label_FineServo2")
+        self.label_FineServo2.setObjectName("label_FineServo2")"""
 
         #Minimize Window Button
         self.Window_Min = QtWidgets.QPushButton(Client)
-        self.Window_Min.setGeometry(QtCore.QRect(1820, 1, 50, 40))
+        self.Window_Min.setGeometry(QtCore.QRect(xSize - 100, 1, 50, 40))
         font = QtGui.QFont()
         font.setFamily("Malgun Gothic")
         self.Window_Min.setFont(font)
         self.Window_Min.setObjectName("Window_Min")
 
-        #RGB Labels
+        """#RGB Labels
         self.R = QtWidgets.QLabel(Client)
         self.R.setGeometry(QtCore.QRect(1730, 90, 16, 20))
         font = QtGui.QFont()
@@ -455,11 +458,11 @@ class Ui_Client(object):
         font.setFamily("Malgun Gothic")
         font.setPointSize(10)
         self.Servo2.setFont(font)
-        self.Servo2.setObjectName("Servo2")
+        self.Servo2.setObjectName("Servo2")"""
         
 
         self.Btn_Mode1 = QtWidgets.QRadioButton(Client)
-        self.Btn_Mode1.setGeometry(QtCore.QRect(1535, 410, 90, 30))
+        self.Btn_Mode1.setGeometry(QtCore.QRect(xSize - 150, 410, 90, 30))
         font = QtGui.QFont()
         font.setFamily("Malgun Gothic")
         font.setPointSize(10)
@@ -478,28 +481,28 @@ class Ui_Client(object):
         self.Btn_BackWard.setText(_translate("Client", "BackWard"))
         self.Btn_Turn_Right.setText(_translate("Client", "Turn Right"))
         self.Btn_Video.setText(_translate("Client", "Open Video"))
-        self.Btn_Down.setText(_translate("Client", "Down"))
-        self.Btn_Left.setText(_translate("Client", "Left"))
-        self.Btn_Home.setText(_translate("Client", "Home"))
-        self.Btn_Up.setText(_translate("Client", "Up"))
-        self.Btn_Right.setText(_translate("Client", "Right"))
+        #self.Btn_Down.setText(_translate("Client", "Down"))
+        #self.Btn_Left.setText(_translate("Client", "Left"))
+        #self.Btn_Home.setText(_translate("Client", "Home"))
+        #self.Btn_Up.setText(_translate("Client", "Up"))
+        #self.Btn_Right.setText(_translate("Client", "Right"))
         self.Window_Close.setText(_translate("Client", "×"))
         self.IP.setText(_translate("Client", "192.168.1.3"))
         self.Btn_Connect.setText(_translate("Client", "Connect"))
-        self.checkBox_Led1.setText(_translate("Client", "LED OFF"))
-        self.label_Servo2.setText(_translate("Client", "0"))
-        self.label_Servo1.setText(_translate("Client", "90"))
-        self.Color_R.setText(_translate("Client", "255"))
-        self.Color_G.setText(_translate("Client", "0"))
-        self.Color_B.setText(_translate("Client", "0"))
-        self.label_FineServo1.setText(_translate("Client", "0"))
-        self.label_FineServo2.setText(_translate("Client", "0"))
+        #self.checkBox_Led1.setText(_translate("Client", "LED OFF"))
+        #self.label_Servo2.setText(_translate("Client", "0"))
+        #self.label_Servo1.setText(_translate("Client", "90"))
+        #self.Color_R.setText(_translate("Client", "255"))
+        #self.Color_G.setText(_translate("Client", "0"))
+        #self.Color_B.setText(_translate("Client", "0"))
+        #self.label_FineServo1.setText(_translate("Client", "0"))
+        #self.label_FineServo2.setText(_translate("Client", "0"))
         self.Window_Min.setText(_translate("Client", "-"))
-        self.R.setText(_translate("Client", "R"))
-        self.G.setText(_translate("Client", "G"))
-        self.B.setText(_translate("Client", "B"))
-        self.Led_Module.setText(_translate("Client", "Led Module"))
-        self.Servo1.setText(_translate("Client", "Servo 1"))
-        self.Servo2.setText(_translate("Client", "Servo 2"))
+        #self.R.setText(_translate("Client", "R"))
+        #self.G.setText(_translate("Client", "G"))
+        #self.B.setText(_translate("Client", "B"))
+        #self.Led_Module.setText(_translate("Client", "Led Module"))
+        #self.Servo1.setText(_translate("Client", "Servo 1"))
+        #self.Servo2.setText(_translate("Client", "Servo 2"))
         #self.Btn_Buzzer.setText(_translate("Client", "Buzzer"))
         self.Btn_Mode1.setText(_translate("Client", "M-Free"))

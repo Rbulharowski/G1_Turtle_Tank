@@ -28,10 +28,10 @@ class mywindow(QMainWindow,Ui_Client):
         self.intervalChar='#'
         self.h=self.IP.text()
         self.TCP=VideoStreaming()
-        self.servo1=90
-        self.servo2=90
-        self.label_FineServo2.setText("0")
-        self.label_FineServo1.setText("0")
+        #self.servo1=90
+        #self.servo2=90
+        #self.label_FineServo2.setText("0")
+        #self.label_FineServo1.setText("0")
         self.m_DragPosition=self.pos()
         self.setWindowFlags(Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint)
         self.setMouseTracking(True)
@@ -44,38 +44,38 @@ class mywindow(QMainWindow,Ui_Client):
         #self.progress_Power.setMinimum(0)
         #self.progress_Power.setMaximum(100)
         self.name.setAlignment(QtCore.Qt.AlignCenter)
-        self.label_Servo1.setText('90')
-        self.label_Servo2.setText('90')
+        #self.label_Servo1.setText('90')
+        #self.label_Servo2.setText('90')
         self.label_Video.setAlignment(QtCore.Qt.AlignCenter|QtCore.Qt.AlignVCenter)
-        self.label_Servo1.setAlignment(QtCore.Qt.AlignCenter|QtCore.Qt.AlignVCenter)
-        self.label_Servo2.setAlignment(QtCore.Qt.AlignCenter|QtCore.Qt.AlignVCenter)
+        #self.label_Servo1.setAlignment(QtCore.Qt.AlignCenter|QtCore.Qt.AlignVCenter)
+        #self.label_Servo2.setAlignment(QtCore.Qt.AlignCenter|QtCore.Qt.AlignVCenter)
         
-        self.label_FineServo1.setAlignment(QtCore.Qt.AlignCenter|QtCore.Qt.AlignVCenter)
-        self.label_FineServo2.setAlignment(QtCore.Qt.AlignCenter|QtCore.Qt.AlignVCenter)
+        #self.label_FineServo1.setAlignment(QtCore.Qt.AlignCenter|QtCore.Qt.AlignVCenter)
+        #self.label_FineServo2.setAlignment(QtCore.Qt.AlignCenter|QtCore.Qt.AlignVCenter)
         
-        self.HSlider_Servo1.setMinimum(0)
-        self.HSlider_Servo1.setMaximum(180)
-        self.HSlider_Servo1.setSingleStep(1)
-        self.HSlider_Servo1.setValue(self.servo1)
-        self.HSlider_Servo1.valueChanged.connect(self.Change_Left_Right)
+        #self.HSlider_Servo1.setMinimum(0)
+        #self.HSlider_Servo1.setMaximum(180)
+        #self.HSlider_Servo1.setSingleStep(1)
+        #self.HSlider_Servo1.setValue(self.servo1)
+        #self.HSlider_Servo1.valueChanged.connect(self.Change_Left_Right)
 
-        self.HSlider_FineServo1.setMinimum(-10)
-        self.HSlider_FineServo1.setMaximum(10)
-        self.HSlider_FineServo1.setSingleStep(1)
-        self.HSlider_FineServo1.setValue(0)
-        self.HSlider_FineServo1.valueChanged.connect(self.Fine_Tune_Left_Right)
+        #self.HSlider_FineServo1.setMinimum(-10)
+        #self.HSlider_FineServo1.setMaximum(10)
+        #self.HSlider_FineServo1.setSingleStep(1)
+        #self.HSlider_FineServo1.setValue(0)
+        #self.HSlider_FineServo1.valueChanged.connect(self.Fine_Tune_Left_Right)
 
-        self.HSlider_FineServo2.setMinimum(-10)
-        self.HSlider_FineServo2.setMaximum(10)
-        self.HSlider_FineServo2.setSingleStep(1)
-        self.HSlider_FineServo2.setValue(0)
-        self.HSlider_FineServo2.valueChanged.connect(self.Fine_Tune_Up_Down)
+        #self.HSlider_FineServo2.setMinimum(-10)
+        #self.HSlider_FineServo2.setMaximum(10)
+        #self.HSlider_FineServo2.setSingleStep(1)
+        #self.HSlider_FineServo2.setValue(0)
+        #self.HSlider_FineServo2.valueChanged.connect(self.Fine_Tune_Up_Down)
         
-        self.VSlider_Servo2.setMinimum(80)
-        self.VSlider_Servo2.setMaximum(180)
-        self.VSlider_Servo2.setSingleStep(1)
-        self.VSlider_Servo2.setValue(self.servo2)
-        self.VSlider_Servo2.valueChanged.connect(self.Change_Up_Down)
+        #self.VSlider_Servo2.setMinimum(80)
+        #self.VSlider_Servo2.setMaximum(180)
+        #self.VSlider_Servo2.setSingleStep(1)
+        #self.VSlider_Servo2.setValue(self.servo2)
+        #self.VSlider_Servo2.valueChanged.connect(self.Change_Up_Down)
 
         """self.checkBox_Led2.setChecked(False)
         self.checkBox_Led2.stateChanged.connect(lambda:self.LedChange(self.checkBox_Led2))
@@ -127,11 +127,11 @@ class mywindow(QMainWindow,Ui_Client):
 
         self.Btn_Video.clicked.connect(self.on_btn_video)
 
-        self.Btn_Up.clicked.connect(self.on_btn_Up)
-        self.Btn_Left.clicked.connect(self.on_btn_Left)
-        self.Btn_Down.clicked.connect(self.on_btn_Down)
-        self.Btn_Home.clicked.connect(self.on_btn_Home)
-        self.Btn_Right.clicked.connect(self.on_btn_Right)
+        #self.Btn_Up.clicked.connect(self.on_btn_Up)
+        #self.Btn_Left.clicked.connect(self.on_btn_Left)
+        #self.Btn_Down.clicked.connect(self.on_btn_Down)
+        #self.Btn_Home.clicked.connect(self.on_btn_Home)
+        #self.Btn_Right.clicked.connect(self.on_btn_Right)
         #self.Btn_Tracking_Faces.clicked.connect(self.Tracking_Face)
         
 
@@ -140,7 +140,7 @@ class mywindow(QMainWindow,Ui_Client):
         
         self.Btn_Connect.clicked.connect(self.on_btn_Connect)
 
-        self.checkBox_Led1.clicked.connect(self.on_LED)
+        #self.checkBox_Led1.clicked.connect(self.on_LED)
         
         
         self.Window_Min.clicked.connect(self.windowMinimumed)
