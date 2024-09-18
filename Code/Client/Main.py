@@ -28,10 +28,6 @@ class mywindow(QMainWindow,Ui_Client):
         self.intervalChar='#'
         self.h=self.IP.text()
         self.TCP=VideoStreaming()
-        #self.servo1=90
-        #self.servo2=90
-        #self.label_FineServo2.setText("0")
-        #self.label_FineServo1.setText("0")
         self.m_DragPosition=self.pos()
         self.setWindowFlags(Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint)
         self.setMouseTracking(True)
@@ -41,77 +37,13 @@ class mywindow(QMainWindow,Ui_Client):
         self.Key_D=False
         self.Key_Space=False
         self.setFocusPolicy(Qt.StrongFocus)
-        #self.progress_Power.setMinimum(0)
-        #self.progress_Power.setMaximum(100)
+
         self.name.setAlignment(QtCore.Qt.AlignCenter)
-        #self.label_Servo1.setText('90')
-        #self.label_Servo2.setText('90')
+
         self.label_Video.setAlignment(QtCore.Qt.AlignCenter|QtCore.Qt.AlignVCenter)
-        #self.label_Servo1.setAlignment(QtCore.Qt.AlignCenter|QtCore.Qt.AlignVCenter)
-        #self.label_Servo2.setAlignment(QtCore.Qt.AlignCenter|QtCore.Qt.AlignVCenter)
-        
-        #self.label_FineServo1.setAlignment(QtCore.Qt.AlignCenter|QtCore.Qt.AlignVCenter)
-        #self.label_FineServo2.setAlignment(QtCore.Qt.AlignCenter|QtCore.Qt.AlignVCenter)
-        
-        #self.HSlider_Servo1.setMinimum(0)
-        #self.HSlider_Servo1.setMaximum(180)
-        #self.HSlider_Servo1.setSingleStep(1)
-        #self.HSlider_Servo1.setValue(self.servo1)
-        #self.HSlider_Servo1.valueChanged.connect(self.Change_Left_Right)
-
-        #self.HSlider_FineServo1.setMinimum(-10)
-        #self.HSlider_FineServo1.setMaximum(10)
-        #self.HSlider_FineServo1.setSingleStep(1)
-        #self.HSlider_FineServo1.setValue(0)
-        #self.HSlider_FineServo1.valueChanged.connect(self.Fine_Tune_Left_Right)
-
-        #self.HSlider_FineServo2.setMinimum(-10)
-        #self.HSlider_FineServo2.setMaximum(10)
-        #self.HSlider_FineServo2.setSingleStep(1)
-        #self.HSlider_FineServo2.setValue(0)
-        #self.HSlider_FineServo2.valueChanged.connect(self.Fine_Tune_Up_Down)
-        
-        #self.VSlider_Servo2.setMinimum(80)
-        #self.VSlider_Servo2.setMaximum(180)
-        #self.VSlider_Servo2.setSingleStep(1)
-        #self.VSlider_Servo2.setValue(self.servo2)
-        #self.VSlider_Servo2.valueChanged.connect(self.Change_Up_Down)
-
-        """self.checkBox_Led2.setChecked(False)
-        self.checkBox_Led2.stateChanged.connect(lambda:self.LedChange(self.checkBox_Led2))
-        self.checkBox_Led3.setChecked(False)
-        self.checkBox_Led3.stateChanged.connect(lambda:self.LedChange(self.checkBox_Led3))
-        self.checkBox_Led4.setChecked(False)
-        self.checkBox_Led4.stateChanged.connect(lambda:self.LedChange(self.checkBox_Led4))
-        self.checkBox_Led5.setChecked(False)
-        self.checkBox_Led5.stateChanged.connect(lambda:self.LedChange(self.checkBox_Led5))
-        self.checkBox_Led6.setChecked(False)
-        self.checkBox_Led6.stateChanged.connect(lambda:self.LedChange(self.checkBox_Led6))
-        self.checkBox_Led7.setChecked(False)
-        self.checkBox_Led7.stateChanged.connect(lambda:self.LedChange(self.checkBox_Led7))
-        self.checkBox_Led8.setChecked(False)
-        self.checkBox_Led8.stateChanged.connect(lambda:self.LedChange(self.checkBox_Led8))
-        
-        self.checkBox_Led_Mode1.setChecked(False)
-        self.checkBox_Led_Mode1.stateChanged.connect(lambda:self.LedChange(self.checkBox_Led_Mode1))
-        self.checkBox_Led_Mode2.setChecked(False)
-        self.checkBox_Led_Mode2.stateChanged.connect(lambda:self.LedChange(self.checkBox_Led_Mode2))
-        self.checkBox_Led_Mode3.setChecked(False)
-        self.checkBox_Led_Mode3.stateChanged.connect(lambda:self.LedChange(self.checkBox_Led_Mode3))
-        self.checkBox_Led_Mode4.setChecked(False)
-        self.checkBox_Led_Mode4.stateChanged.connect(lambda:self.LedChange(self.checkBox_Led_Mode4))"""
 
         self.Btn_Mode1.setChecked(True)
         self.Btn_Mode1.toggled.connect(lambda:self.on_btn_Mode(self.Btn_Mode1))
-        """self.Btn_Mode2.setChecked(False)
-        self.Btn_Mode2.toggled.connect(lambda:self.on_btn_Mode(self.Btn_Mode2))
-        self.Btn_Mode3.setChecked(False)
-        self.Btn_Mode3.toggled.connect(lambda:self.on_btn_Mode(self.Btn_Mode3))
-        self.Btn_Mode4.setChecked(False)
-        self.Btn_Mode4.toggled.connect(lambda:self.on_btn_Mode(self.Btn_Mode4))
-        
-        self.Ultrasonic.clicked.connect(self.on_btn_Ultrasonic)
-        self.Light.clicked.connect(self.on_btn_Light)"""
         
         self.Btn_ForWard.pressed.connect(self.on_btn_ForWard)
         self.Btn_ForWard.released.connect(self.on_btn_Stop)
@@ -126,23 +58,8 @@ class mywindow(QMainWindow,Ui_Client):
         self.Btn_Turn_Right.released.connect(self.on_btn_Stop)
 
         self.Btn_Video.clicked.connect(self.on_btn_video)
-
-        #self.Btn_Up.clicked.connect(self.on_btn_Up)
-        #self.Btn_Left.clicked.connect(self.on_btn_Left)
-        #self.Btn_Down.clicked.connect(self.on_btn_Down)
-        #self.Btn_Home.clicked.connect(self.on_btn_Home)
-        #self.Btn_Right.clicked.connect(self.on_btn_Right)
-        #self.Btn_Tracking_Faces.clicked.connect(self.Tracking_Face)
-        
-
-        #self.Btn_Buzzer.pressed.connect(self.on_btn_Buzzer)
-        #self.Btn_Buzzer.released.connect(self.on_btn_Buzzer)
-        
         self.Btn_Connect.clicked.connect(self.on_btn_Connect)
 
-        #self.checkBox_Led1.clicked.connect(self.on_LED)
-        
-        
         self.Window_Min.clicked.connect(self.windowMinimumed)
         self.Window_Close.clicked.connect(self.close)
         self.timer = QTimer(self)
@@ -216,42 +133,6 @@ class mywindow(QMainWindow,Ui_Client):
                 self.checkBox_Led1.setChecked(False)
             else:
                 self.checkBox_Led1.setChecked(True)
-        """elif(event.key() == Qt.Key_2):
-            if self.checkBox_Led2.isChecked() == True:
-                self.checkBox_Led2.setChecked(False)
-            else:
-                self.checkBox_Led2.setChecked(True)
-        elif(event.key() == Qt.Key_3):
-            if self.checkBox_Led3.isChecked() == True:
-                self.checkBox_Led3.setChecked(False)
-            else:
-                self.checkBox_Led3.setChecked(True)
-        elif(event.key() == Qt.Key_4):
-            if self.checkBox_Led4.isChecked() == True:
-                self.checkBox_Led4.setChecked(False)
-            else:
-                self.checkBox_Led4.setChecked(True)
-        elif(event.key() == Qt.Key_5):
-            if self.checkBox_Led5.isChecked() == True:
-                self.checkBox_Led5.setChecked(False)
-            else:
-                self.checkBox_Led5.setChecked(True)
-        elif(event.key() == Qt.Key_6):
-            if self.checkBox_Led6.isChecked() == True:
-                self.checkBox_Led6.setChecked(False)
-            else:
-                self.checkBox_Led6.setChecked(True)
-        elif(event.key() == Qt.Key_7):
-            if self.checkBox_Led7.isChecked() == True:
-                self.checkBox_Led7.setChecked(False)
-            else:
-                self.checkBox_Led7.setChecked(True)
-        elif(event.key() == Qt.Key_8):
-            if self.checkBox_Led8.isChecked() == True:
-                self.checkBox_Led8.setChecked(False)
-            else:
-                self.checkBox_Led8.setChecked(True)"""
-
                 
         if event.isAutoRepeat():
             pass
@@ -360,19 +241,6 @@ class mywindow(QMainWindow,Ui_Client):
         else:
             self.TCP.sendData(cmd.CMD_BUZZER+self.intervalChar+'0'+self.endChar)
             self.Btn_Buzzer.setText('Buzzer')
-    """def on_btn_Ultrasonic(self):
-        if self.Ultrasonic.text()=="Ultrasonic":
-            self.TCP.sendData(cmd.CMD_SONIC+self.intervalChar+'1'+self.endChar)
-        else:
-            self.TCP.sendData(cmd.CMD_SONIC+self.intervalChar+'0'+self.endChar)
-            self.Ultrasonic.setText("Ultrasonic")"""
- 
-    """def on_btn_Light(self):
-        if self.Light.text() == "Light":
-            self.TCP.sendData(cmd.CMD_LIGHT+self.intervalChar+'1'+self.endChar)
-        else:
-            self.TCP.sendData(cmd.CMD_LIGHT+self.intervalChar+'0'+self.endChar)
-            self.Light.setText("Light")"""
 
         
     def Change_Left_Right(self):#Left or Right
@@ -491,18 +359,6 @@ class mywindow(QMainWindow,Ui_Client):
             if Mode.isChecked() == True:
                 #self.timer.start(34)
                 self.TCP.sendData(cmd.CMD_MODE+self.intervalChar+'one'+self.endChar)
-        """if Mode.text() == "M-Light":
-            if Mode.isChecked() == True:
-                #self.timer.stop()
-                self.TCP.sendData(cmd.CMD_MODE+self.intervalChar+'two'+self.endChar)
-        if Mode.text() == "M-Sonic":
-            if Mode.isChecked() == True:
-                #self.timer.stop()
-                self.TCP.sendData(cmd.CMD_MODE+self.intervalChar+'three'+self.endChar)    
-        if Mode.text() == "M-Line":
-            if Mode.isChecked() == True:
-                #self.timer.stop()
-                self.TCP.sendData(cmd.CMD_MODE+self.intervalChar+'four'+self.endChar)"""
          
     def on_LED(self):
         if self.checkBox_Led1.text() == "LED ON":
@@ -581,10 +437,6 @@ class mywindow(QMainWindow,Ui_Client):
                         cmdArray=cmdArray[:-1]
                 for oneCmd in cmdArray:
                     Massage=oneCmd.split("#")
-                    """if cmd.CMD_SONIC in Massage:
-                        self.Ultrasonic.setText('Obstruction:%s cm'%Massage[1])
-                    elif cmd.CMD_LIGHT in Massage:
-                        self.Light.setText("Left:"+Massage[1]+'V'+' '+"Right:"+Massage[2]+'V')"""
                     if cmd. CMD_POWER in Massage:
                         percent_power=int((float(Massage[1])-7)/1.40*100)
                         self.progress_Power.setValue(percent_power) 
@@ -609,12 +461,6 @@ class mywindow(QMainWindow,Ui_Client):
         except:
             pass
         return bValid
-
-    """def Tracking_Face(self):
-        if self.Btn_Tracking_Faces.text()=="Tracing-On":
-            self.Btn_Tracking_Faces.setText("Tracing-Off")
-        else:
-            self.Btn_Tracking_Faces.setText("Tracing-On")"""
     
     def find_Face(self,face_x,face_y):
         if face_x!=0 and face_y!=0:

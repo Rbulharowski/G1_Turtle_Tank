@@ -59,7 +59,6 @@ class VideoStreaming:
         stream_bytes = b' '
         try:
             self.client_socket.connect((ip, 5000))
-            #self.connection = self.client_socket.makefile('rb')
         except:
             #print "command port connect failed"
             print("Failed Camera")
@@ -77,15 +76,6 @@ class VideoStreaming:
                 # Decode frame from JPEG
                 frame_np = cv2.imdecode(np.frombuffer(frame_data, dtype=np.uint8), cv2.IMREAD_COLOR)
                 cv2.imwrite('video.jpg',frame_np)
-
-                """stream_bytes= self.connection.read(4) 
-                leng=struct.unpack('<L', stream_bytes[:4])
-                jpg=self.connection.read(leng[0])
-                if self.IsValidImage4Bytes(jpg):
-                            image = cv2.imdecode(np.frombuffer(jpg, dtype=np.uint8), cv2.IMREAD_COLOR)
-                            if self.video_Flag:
-                                self.face_detect(image)
-                                self.video_Flag=False"""
             except Exception as e:
                 print ("Failure")
                 break
