@@ -12,7 +12,7 @@ from Command import COMMAND as cmd
 
 class VideoStreaming:
     def __init__(self):
-        self.face_cascade = cv2.CascadeClassifier(r'haarcascade_frontalface_default.xml')
+        #self.face_cascade = cv2.CascadeClassifier(r'haarcascade_frontalface_default.xml')
         self.video_Flag=True
         self.connect_Flag=False
         self.face_x=0
@@ -41,7 +41,7 @@ class VideoStreaming:
                 bValid = False
         return bValid
 
-    def face_detect(self,img):
+    """def face_detect(self,img):
         if sys.platform.startswith('win') or sys.platform.startswith('darwin'):
             gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
             faces = self.face_cascade.detectMultiScale(gray,1.3,5)
@@ -53,7 +53,7 @@ class VideoStreaming:
             else:
                 self.face_x=0
                 self.face_y=0
-        cv2.imwrite('video.jpg',img)
+        cv2.imwrite('video.jpg',img)"""
         
     def streaming(self,ip):
         stream_bytes = b' '

@@ -23,6 +23,10 @@ for x in range(1,4):
 	if os.system("pip3 install numpy") == 0:
 		flag=flag | 0x10
 		break
+for x in range(1,4):
+	if os.system("pip3 install paramiko") == 0:
+		flag = flag | 0x10
+		break
 if flag==0x1f:
 		os.system("pip3 list && pause")
 		print("\nAll libraries installed successfully")

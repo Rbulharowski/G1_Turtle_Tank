@@ -280,7 +280,7 @@ class Ui_Client(object):
         self.Btn_Turn_Right.setText(_translate("Client", "Turn Right"))
         self.Btn_Video.setText(_translate("Client", "Open Video"))
         self.Window_Close.setText(_translate("Client", "×"))
-        self.IP.setText(_translate("Client", "192.168.1.3"))
+        self.IP.setText(_translate("Client", "192.168.1.4"))
         self.Btn_Connect.setText(_translate("Client", "Connect"))
         self.Window_Min.setText(_translate("Client", "-"))
         self.Btn_Mode1.setText(_translate("Client", "M-Free"))
